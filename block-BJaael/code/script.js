@@ -1,14 +1,20 @@
+let getRandomNumber = function (max) {
+  return Math.floor(Math.random() * max);
+};
+
 let container = document.querySelector(".container");
 
 for (let i = 0; i < 500; i++) {
-  let box = document.createElement("div");
-  box.className = "box";
-  box.innerText = Math.floor(Math.random() * 500) + 1;
-  container.append(box);
+  let div = document.createElement("div");
+  div.classList.add("box");
+  let h3 = document.createElement("h3");
+  h3.innerText = getRandomNumber(500);
+  div.append(h3);
+  container.append(div);
 }
 
-function generateRandomColor() {
-  let hexNumber = [
+let generateRandomColor = function () {
+  let hexCode = [
     "0",
     "1",
     "2",
@@ -26,23 +32,21 @@ function generateRandomColor() {
     "e",
     "f",
   ];
-
   let color = "#";
+
   for (let i = 0; i < 6; i++) {
-    let randomNumber = Math.floor(Math.random() * 16);
-    color = color + hexNumber[randomNumber];
+    let randomNum = getRandomNumber(16);
+    color = color + hexCode[randomNum];
   }
   return color;
-}
+};
 
-// console.log(generateRandomColor());
-
-function handleMousemove() {
-  let boxes = document.querySelectorAll(".box");
-  boxes.forEach((box) => {
+function handleEvents() {
+  let box = document.querySelectorAll(".box");
+  box.forEach((box) => {
     box.style.backgroundColor = generateRandomColor();
-    box.innerText = Math.floor(Math.random() * 500) + 1;
+    box.querySelector("h3").innerText = getRandomNumber(500);
   });
 }
 
-container.addEventListener("mousemove", handleMousemove);
+container.addEventListener("mousemove", handleEvents);
