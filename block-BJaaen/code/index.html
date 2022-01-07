@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper and Scissors</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Rock Paper Scissors</h1>
+      </header>
+      <div class="user-end">
+        <h2>
+          You - <span class="user-count">0</span> ---
+          <strong class="user-selection"></strong>
+        </h2>
+        <!-- Rock -->
+        <i class="fa fa-hand-rock-o" data-name="Rock" aria-hidden="true"></i>
+
+        <!-- Paper -->
+        <i class="fa fa-hand-paper-o" data-name="Paper" aria-hidden="true"></i>
+
+        <!-- Scissors -->
+        <i
+          class="fa fa-hand-scissors-o"
+          data-name="Scissor"
+          aria-hidden="true"
+        ></i>
+      </div>
+      <div class="machine-end">
+        <h2>
+          Computer - <span class="machine-count">0</span> ---
+          <strong class="machine-selection"></strong>
+        </h2>
+        <!-- Rock -->
+        <i class="fa fa-hand-rock-o" data-name="Rock" aria-hidden="true"></i>
+
+        <!-- Paper -->
+        <i class="fa fa-hand-paper-o" data-name="Paper" aria-hidden="true"></i>
+
+        <!-- Scissors -->
+        <i
+          class="fa fa-hand-scissors-o"
+          data-name="Scissor"
+          aria-hidden="true"
+        ></i>
+      </div>
+      <footer>
+        <span class="reset">Reset</span>
+        <h3 class="result"></h3>
+      </footer>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
