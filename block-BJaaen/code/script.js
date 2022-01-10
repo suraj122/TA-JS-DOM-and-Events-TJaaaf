@@ -1,56 +1,93 @@
-let userEnd = document.querySelector(".user-end");
-let userSelection = document.querySelector(".user-selection");
-let machineSelection = document.querySelector(".machine-selection");
+let userLayout = document.querySelector(".user-icons");
+let computerLayout = document.querySelector(".computer-icons");
 let result = document.querySelector(".result");
 let reset = document.querySelector(".reset");
-let userCount = document.querySelector(".user-count");
-let machineCount = document.querySelector(".machine-count");
+let userSelection = document.querySelector(".user-selection");
+let computerSelection = document.querySelector(".computer-selection");
 
-let machineItem = document.querySelectorAll(".machine-end i");
+let dataSet = [
+  {
+    name: "rock",
+    beates: "scissors",
+  },
+  {
+    name: "paper",
+    beates: "rock",
+  },
+  {
+    name: "scissors",
+    beates: "paper",
+  },
+];
 
-function getRandomNum(max) {
+let userSelected = {},
+  computerSelected = {};
+
+function generateRandomNum(max = 3) {
   return Math.floor(Math.random() * max);
 }
 
-let userCounter = 0;
-let machineCounter = 0;
-
-function handleEvent(e) {
-  let userName = e.target.dataset.name;
-  userSelection.innerText = userName;
-  let machineName = machineItem[getRandomNum(3)].dataset.name;
-  machineSelection.innerText = machineName;
-  if (userName === "Scissor" && machineName === "Paper") {
+function getWinner(user, computer) {
+  if (user.name === computer.name) {
+    result.innerText = "It's a tie";
+  } else if (user.beates === computer.name) {
     result.innerText = "You Won!";
-    userCounter = userCounter + 1;
-    userCount.innerText = userCounter;
-  } else if (userName === "Paper" && machineName === "Rock") {
-    result.innerText = "You Won!";
-    userCounter = userCounter + 1;
-    userCount.innerText = userCounter;
-  } else if (userName === "Rock" && machineName === "Scissor") {
-    result.innerText = "You Won!";
-    userCounter = userCounter + 1;
-    userCount.innerText = userCounter;
-  } else if (userName === "Scissor" && machineName === "Scissor") {
-    result.innerText = "It's a tie!";
-  } else if (userName === "Paper" && machineName === "Paper") {
-    result.innerText = "It's a tie!";
-  } else if (userName === "Rock" && machineName === "Rock") {
-    result.innerText = "It's a tie!";
   } else {
-    result.innerText = "You lost!";
-    machineCounter = machineCounter + 1;
-    machineCount.innerText = machineCounter;
+    result.innerText = "You Lost!";
   }
 }
 
-userEnd.addEventListener("click", handleEvent);
-reset.addEventListener("click", function (e) {
-  userSelection.innerText = "";
-  machineSelection.innerText = "";
+function updateSelection(user, computer) {
+  userSelection.innerText = user.name;
+  computerSelection.innerText = computer.name;
+}
+
+function createUserLayout() {
+  userLayout.innerHTML = "";
+  dataSet.forEach((icon) => {
+    let li = document.createElement("li");
+    let i = document.createElement("i");
+    i.className = `fa fa-hand-${icon.name}-o`;
+    li.append(i);
+
+    if (userSelected.name === icon.name) {
+      li.classList.add("active");
+    }
+
+    li.addEventListener("click", function () {
+      userSelected = icon;
+      computerSelected = dataSet[generateRandomNum()];
+      getWinner(userSelected, computerSelected);
+      updateSelection(userSelected, computerSelected);
+      createUserLayout();
+      createComputerLayout();
+    });
+    userLayout.append(li);
+  });
+}
+
+createUserLayout();
+
+function createComputerLayout() {
+  computerLayout.innerHTML = "";
+  dataSet.forEach((icon) => {
+    let li = document.createElement("li");
+    let i = document.createElement("i");
+    i.className = `fa fa-hand-${icon.name}-o`;
+    li.append(i);
+    computerLayout.append(li);
+    if (computerSelected.name === icon.name) {
+      li.classList.add("active");
+    }
+  });
+}
+
+createComputerLayout();
+
+reset.addEventListener("click", function () {
+  (userSelected = {}), (computerSelected = {});
+  createUserLayout(), createComputerLayout();
   result.innerText = "";
-  userCount.innerText = "0";
-  machineCount.innerText = "0";
+  userSelection.innerText = "";
+  computerSelection.innerText = "";
 });
-// console.log(machineItem);
