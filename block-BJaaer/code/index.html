@@ -29,7 +29,7 @@
         </div>
         <div class="form-control">
           <label for="movies">What do you love?</label>
-          <select id="gender" name="gender">
+          <select id="hobby" name="hobby">
             <option value="movies">Movies</option>
             <option value="series">Series</option>
             <option value="others">Others</option>
@@ -38,23 +38,11 @@
 
         <div class="form-control">
           <label for="color">Choose a color</label>
-          <input
-            id="color"
-            type="color"
-            name="email"
-            placeholder="Enter your email"
-          />
+          <input id="color" type="color" name="color" />
         </div>
         <div class="form-control">
           <label for="range"> Rate the movie Inception out of 10 </label>
-          <input
-            id="range"
-            type="range"
-            max="10"
-            step="1"
-            name="email"
-            placeholder="Enter your email"
-          />
+          <input id="range" type="range" max="10" step="1" name="rating" />
         </div>
         <div class="form-control">
           <label>Book genre you love?</label>
@@ -92,6 +80,11 @@
         <button type="submit">Submit</button>
       </form>
     </div>
+    <div class="modal">
+      <small class="close">Close</small>
+      <div class="modal-body"></div>
+    </div>
+
     <script src="./script.js"></script>
   </body>
 </html>
