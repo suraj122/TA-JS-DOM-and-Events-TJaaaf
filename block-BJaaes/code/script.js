@@ -1,17 +1,15 @@
 let form = document.querySelector("form");
 
-let errorMessage = "";
+let errorMessage = {};
 
-function checkNum(str) {
-  return str.split("").some((e) => Number(e));
+function displayError(name) {
+  form.elements[name].nextElementSibling.innerText = errorMessage[name];
+  form.elements[name].parentElement.classList.add("error");
 }
-
-function doesContain(str) {
-  return str.includes("@");
-}
-
-function checkContactNum(str) {
-  return str.split("").every((e) => Number(e));
+function displaySuccess(name) {
+  form.elements[name].nextElementSibling.innerText = "";
+  form.elements[name].parentElement.classList.remove("error");
+  form.elements[name].parentElement.classList.add("success");
 }
 
 function handleSubmit(event) {
@@ -20,70 +18,55 @@ function handleSubmit(event) {
   let elements = event.target.elements;
 
   // Checking Username
-  let userName = elements.username;
-  if (userName.value == "") {
-    errorMessage = "Can't be empty";
-    userName.nextElementSibling.innerText = errorMessage;
-  } else if (userName.value.length < 4) {
-    errorMessage = "Can't be less than 4 Char";
-    userName.nextElementSibling.innerText = errorMessage;
+  let userName = elements.username.value;
+  if (userName.length < 4) {
+    errorMessage.username = "Username can't be less than 4 characters";
+    displayError("username");
   } else {
-    userName.nextElementSibling.innerText = "";
+    displaySuccess("username");
   }
 
   // Checking Name
-  let name = elements.name;
-  if (name.value == "") {
-    errorMessage = "Can't be empty";
-    name.nextElementSibling.innerText = errorMessage;
-  } else if (checkNum(name.value)) {
-    errorMessage = "Name can't be numbers";
-    name.nextElementSibling.innerText = errorMessage;
+  let name = elements.name.value;
+  if (!isNaN(name)) {
+    errorMessage.name = "Name can't be numbers";
+    displayError("name");
   } else {
-    name.nextElementSibling.innerText = "";
+    displaySuccess("name");
   }
 
   // Checking Email
-  let email = elements.email;
-  if (email.value == "") {
-    errorMessage = "Can't be empty";
-    email.nextElementSibling.innerText = errorMessage;
-  } else if (email.value.length < 6) {
-    errorMessage = "Email must be at least 6 characters";
-    email.nextElementSibling.innerText = errorMessage;
-  } else if (!doesContain(email.value)) {
-    errorMessage = "Email must contain the symbol @";
-    email.nextElementSibling.innerText = errorMessage;
+  let email = elements.email.value;
+  if (!email.includes("@")) {
+    errorMessage.email = "Email must contain the symbol @";
+    displayError("email");
+  } else if (email.length < 6) {
+    errorMessage.email = "Email must be at least 6 characters";
+    displayError("email");
   } else {
-    email.nextElementSibling.innerText = "";
+    displaySuccess("email");
   }
 
   // Checking Phone
-  let contact = elements.contact;
-  if (contact.value == "") {
-    errorMessage = "Can't be empty";
-    contact.nextElementSibling.innerText = errorMessage;
-  } else if (contact.value.length < 7) {
-    errorMessage = "Length of phone number can't be less than 7";
-    contact.nextElementSibling.innerText = errorMessage;
-  } else if (!checkContactNum(contact.value)) {
-    errorMessage = "Phone numbers can only be a number";
-    contact.nextElementSibling.innerText = errorMessage;
+  let contact = elements.contact.value;
+  if (isNaN(contact)) {
+    errorMessage.contact = "Phone numbers can only be a number";
+    displayError("contact");
+  } else if (contact.length < 7) {
+    errorMessage.contact = "Length of phone number can't be less than 7";
+    displayError("contact");
   } else {
-    contact.nextElementSibling.innerText = "";
+    displaySuccess("contact");
   }
 
   // Checking Password
-  let password = elements.password;
-  let confirm = elements.confirmation;
-  if (password.value == "") {
-    errorMessage = "Can't be empty";
-    password.nextElementSibling.innerText = errorMessage;
-  } else if (password.value !== confirm.value) {
-    errorMessage = "Password and confirm password must be same.";
-    password.nextElementSibling.innerText = errorMessage;
+  let password = elements.password.value;
+  let confirm = elements.confirmation.value;
+  if (password !== confirm) {
+    errorMessage.password = "Password and confirm password must be same.";
+    displayError("password");
   } else {
-    password.nextElementSibling.innerText = "";
+    displaySuccess("password");
   }
 }
 
