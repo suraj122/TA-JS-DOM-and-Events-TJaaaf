@@ -63,9 +63,9 @@ button {
   cursor: pointer;
 }
 
-.success {
+.success input {
   border: 1px solid green;
 }
-.error {
+.error input{
   border: 1px solid red;
 }
