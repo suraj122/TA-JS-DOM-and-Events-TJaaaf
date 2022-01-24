@@ -1,11 +1,13 @@
 let input = document.querySelector('input[type="text"]');
 let root = document.querySelector("ul");
+
 let all = document.querySelector(".all");
 let active = document.querySelector(".active");
-let completed = document.querySelector(".completed");
-let filter = document.querySelectorAll(".filter-todo span");
+let completedBtn = document.querySelector(".completed");
 let clear = document.querySelector(".clear");
 let remainingTodo = document.querySelector(".remaining");
+
+let defaultBtn = all;
 
 let allTodos = JSON.parse(localStorage.getItem("todos")) || [];
 
@@ -92,40 +94,38 @@ createUi(allTodos, root);
 function handleAll() {
   localStorage.setItem("todos", JSON.stringify(allTodos));
   createUi(allTodos, root);
+  updateBtn(all);
 }
 
 function handleActive() {
-  let activeTodo = [];
-  allTodos.forEach((todo) => {
-    if (todo.isDone === false) {
-      activeTodo.push(todo);
-    }
-  });
+  let activeTodo = allTodos.filter((todo) => !todo.isDone);
   createUi(activeTodo, root);
+  updateBtn(active);
 }
 
 function handleCompleted() {
-  let completed = [];
-  allTodos.forEach((todo) => {
-    if (todo.isDone === true) {
-      completed.push(todo);
-    }
-  });
+  let completed = allTodos.filter((todo) => todo.isDone);
   createUi(completed, root);
+  updateBtn(completedBtn);
 }
 
 function clearTodo() {
-  let completed = [];
-  allTodos.forEach((todo, i) => {
-    if (todo.isDone === true) {
-      allTodos.splice(i, 1);
-    }
-  });
+  allTodos = allTodos.filter((todo) => !todo.isDone);
   localStorage.setItem("todos", JSON.stringify(allTodos));
   createUi(allTodos, root);
 }
 
+function updateBtn(btn) {
+  all.classList.remove("active-btn");
+  active.classList.remove("active-btn");
+  completedBtn.classList.remove("active-btn");
+  defaultBtn = btn;
+  defaultBtn.classList.add("active-btn");
+}
+
+updateBtn(all);
+
 all.addEventListener("click", handleAll);
 active.addEventListener("click", handleActive);
-completed.addEventListener("click", handleCompleted);
+completedBtn.addEventListener("click", handleCompleted);
 clear.addEventListener("click", clearTodo);
