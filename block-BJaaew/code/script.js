@@ -1,18 +1,31 @@
-let houses = [];
+let allTags = [];
 got.houses.forEach((house) => {
-  houses.push(house.name);
+  allTags.push(house.name);
 });
 
 // Creating NavBar and Sorting according the house name
 
 let navBar = document.querySelector(".navbar");
-houses.forEach((house, i) => {
-  let li = document.createElement("li");
-  li.innerText = house;
-  li.setAttribute("data-id", i);
-  navBar.append(li);
-  li.addEventListener("click", handleHouseData);
-});
+let activeHouse = "";
+function createNavUi(tags) {
+  navBar.innerHTML = "";
+  tags.forEach((tag) => {
+    let li = document.createElement("li");
+    li.innerText = tag;
+    if (activeHouse === tag) {
+      li.classList.add("active");
+    }
+
+    navBar.append(li);
+    li.addEventListener("click", () => {
+      activeHouse = tag;
+      let peopleByHouse = got.houses.find((house) => house.name === tag);
+      createNavUi(allTags);
+      createUi(peopleByHouse.people, allPeople);
+      // console.log(activeHouse);
+    });
+  });
+}
 
 // Displaying People Card
 
@@ -48,11 +61,6 @@ function createUi(data, root) {
 
 // Sorting People byHouse
 
-function handleHouseData(event) {
-  let id = event.target.dataset.id;
-  createUi(got.houses[id].people, allPeople);
-}
-
 // Impleting SearchBar
 
 let input = document.querySelector("input");
@@ -71,3 +79,4 @@ function handleKey(event) {
 input.addEventListener("keyup", handleKey);
 
 createUi(peopleOfGot, allPeople);
+createNavUi(allTags);
