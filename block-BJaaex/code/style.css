@@ -1,0 +1,68 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  line-height: 1.5;
+}
+ul, li {
+  list-style: none;
+}
+main {
+  max-width: 576px;
+  margin: 0 auto;
+  height: 576px;
+}
+header {
+  text-align: center;
+  padding: 48px;
+}
+ul {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  height: 100%;
+  background-color: #5e667e;
+  gap: 16px;
+  padding: 32px;
+}
+li {
+  /* background-color: #cfd6ed; */
+  height: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 0.4s linear;
+}
+.selected {
+  border: 4px solid;
+  transform: rotateY(180deg);
+}
+.match {
+  border: 4px solid red;
+  /* background-image: none !important; */
+  transform: rotateY(180deg);
+}
+.front, .back {
+  height: 100%;
+  border-radius: 8px;
+  position: absolute;
+  width: 100%;
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  backface-visibility: hidden;
+  background-color: #cfd6ed;
+}
+.front {
+  background-image: url(img/owl.png);
+}
+.back {
+  transform: rotateY(180deg);
+}
